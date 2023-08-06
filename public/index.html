@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="https://static.vecteezy.com/system/resources/previews/023/450/148/original/rocket-icon-logo-on-transparent-background-created-with-generative-ai-png.png">
+
+<!-- Some styling -->
+<link rel="stylesheet" type="text/css" href="./css/styles.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<!-- Adding jquery to website -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+<!-- Importing some font families -->
+<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet'>
+<!-- Importing some icons -->
+<script src="https://kit.fontawesome.com/fa62c117c7.js" crossorigin="anonymous"></script>
+<style>
+  .title {font-family: 'Raleway';}
+  .bold {font-weight: 600;}
+  .brand-title {font-family: 'Orbitron'; font-weight: 600;}
+</style>
+</head>
+
+<body>
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="#">
+    <img src="https://static.vecteezy.com/system/resources/previews/023/450/148/original/rocket-icon-logo-on-transparent-background-created-with-generative-ai-png.png" width="30" height="30" class="d-inline-block align-top" alt="">
+    <span class="nav-bar brand-title">COSMIQ</span>
+  </a>
+</nav>
+
+<!--div style="overflow:auto"-->
+<br>
+<div class="container">
+
+  <!--website header-->
+  <div class="center">
+    <div class="v-stack gap-2">
+      <!-- icon credit: https://www.freepik.com/icon/galaxy_3919942-->
+      <img src="./images/galaxy_icon.png" width="200" height="200">
+      <br><br>
+      <h1 class="title bold">Embark on Your Interstellar Journey</h1>
+      <h3 class="title">Calculate Travel Time and Choose Your Spaceship</h3>
+    </div> 
+  </div>
+
+  <br>
+
+  <!--form goes here-->
+  <div class="container overflow-hidden">
+    <div class="row gx-1 center">
+      <div class="col-4">
+        <input class="form-control" type="number" min="1" id="formDistance" placeholder="Enter distance in light-years">
+      </div>
+      <div class="col-4">
+        <select class="form-select" id="formSpaceship">
+          <option value="999" selected> Choose spacecraft of choice</option>
+          <option value="0">Cargojet</option>
+          <option value="1">Space Sailor S-PLUS</option>
+          <option value="2">STARX Astrohaul</option>
+          <option value="3">Warp-drive Cargoship</option>
+          <option value="4">SS Starfleet</option>
+        </select>
+      </div>
+      <div class="col-1">
+        <button class="btn btn-primary" id="formSend">Calculate</button>
+      </div>
+    </div>
+  </div>
+  <br><br><br>
+
+  <!--result goes here-->
+  <div class="row" id="result-time-header" href="#result"></div>
+  <div class="center">
+    <div class="row" id="result-time"></div>
+  </div>
+
+  <br>
+
+  <div class="row" id="result-grid-header">
+  </div>
+  <div class="row" id="result-grid"></div>
+  <br><br><br>
+
+  <!--Scroll to top -->
+  <div class="scroll-container">
+    <div class="scroll-top">
+        <a aria-label="Scroll up" href="#top">
+        <i aria-hidden="true" class="fas fa-arrow-up grow"></i>
+        </a>
+    </div>
+  </div>
+
+</div> <!-- end of container-->
+
+
+</body>
+
+<script>
+  
+  // Calculates the time taken to travel distance and
+  // generates a comparison grid of other spacecrafts
+  document.getElementById("formSend").onclick = () => {
+    if (is_valid_input()) {
+      var distance = document.getElementById("formDistance").value;
+      var spacecraftID = $('#formSpaceship').find(":selected").val();
+      console.log("disance: " + distance + ", spacecraft: " + spacecrafts[spacecraftID].name);
+      var time = compute_time(distance, spacecraftID);
+
+      document.getElementById("result-time-header").innerHTML = '<h5 class="center title">Time it will take to travel the distance.</h5>'
+      // Countdown format credit: Matt Smith @AllThingsSmitty
+      // https://codepen.io/AllThingsSmitty/pen/JJavZN
+      $("#result-time").html(
+        `<div id="countdown">
+          <ul>
+            <li><span id="days">${time.days}</span>days</li>
+            <li><span id="hours">${time.hours.toString().padStart(2, '0')}</span>Hours</li>
+            <li><span id="minutes">${time.minutes.toString().padStart(2, '0')}</span>Minutes</li>
+            <li><span id="seconds">00</span>Seconds</li>
+          </ul>
+        </div>`
+      );
+
+      document.getElementById("result-grid").innerHTML = ""; // Clear contents
+      document.getElementById("result-grid-header").innerHTML = '<h5 class="center title">Compare with other ride options</h5><br><br><br>'
+      for (id = 0; id < spacecrafts.length; id++) {
+        var currID = compute_time(distance, id);
+        if (id != spacecraftID) {
+        // <a href="https://www.vecteezy.com/vector-art/17125492-cartoon-spacecraft-launch-into-outer-space"> Cartoon spacecraft launch into outer space Vectors by Vecteezy </a>
+          $("#result-grid").append(
+            `<div class="col">
+                <div class="card">
+                  <img class="card-img-top" src="./images/spacecraft_placeholder.jpg" alt="Card image cap">
+                  <div class="card-body">
+                    <h5 class="card-title">
+                      ${currID.days.toString().padStart(2, '0')} : ${currID.hours.toString().padStart(2, '0')} : ${currID.minutes.toString().padStart(2, '0')} : 00
+                    </h5>
+                    <p class="card-subtitle mb-2 text-muted title">${spacecrafts[id].name}</p>
+                    
+                      <span class="badge badge-primary">${spacecrafts[id].type}</span>
+                      <span class="badge badge-info">${spacecrafts[id].speed} light-years/hour</span>
+                    
+                  </div>
+                </div>
+              </div>`
+          );
+        }
+      }
+      // Scrolls to the result
+      document.getElementById("result-time-header").scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+
+  /* Helper Functions! */
+
+  // Checks if inputs are valid
+  function is_valid_input() {
+    var alertMessage = "";
+    let invalidDistance = (document.getElementById("formDistance").value.length == 0);
+    let invalidSpaceCraft = ($('#formSpaceship').find(":selected").val() == 999);
+    console.log("invalid dist: " + invalidDistance + ", invalid sc: " + invalidSpaceCraft);
+    if (invalidDistance) {
+      if (invalidSpaceCraft) {
+        alertMessage = "ERROR! Please input valid distance and select a valid spacecraft.";
+      } else {
+        alertMessage = "ERROR! Please input valid distance.";
+      }
+      alert(alertMessage);
+      return false;
+    } else if (invalidSpaceCraft) {
+      alertMessage =  "ERROR! Please select a valid spacecraft.";
+      alert(alertMessage);
+      return false;
+    }
+    return true;
+  }
+    
+  // Returns time taken to travel distance in string
+  function compute_time(distance, id) { 
+    let speed = spacecrafts[id].speed;
+    return hours_to_string(distance/spacecrafts[id].speed);
+  }
+
+  // Converts hours to an object type with the
+  // following structure { days, hours, minute }
+  function hours_to_string(hours) {
+    var resDays = Math.floor(hours / 24);
+    var resHours = hours % 24;
+    var resMins = Math.round((resHours - Math.floor(resHours)) * 60);
+
+    var result = {
+      days: resDays, 
+      hours: Math.floor(resHours), 
+      minutes: Math.floor(resMins)
+    }
+
+    return result;
+  }
+
+  /* Spacecraft data */
+
+  let spacecrafts = [
+    {
+     name: "Cargojet",
+     id: 0,
+     speed: 10,
+     type: "Intragalatcic Spacecraft"
+    },
+    {
+     name: "Space Sailor S-PLUS",
+     id: 1,
+     speed: 15,
+     type: "Intragalactic Spacecraft"
+    },
+    {
+     name: "STARX Astrohaul",
+     id: 2,
+     speed: 25,
+     type: "Intragalactic Spacecraft"
+    },
+    {
+     name: "Warp-drive Cargoship",
+     id: 3,
+     speed: 350,
+     type: "Intergalactic Spacecraft"
+    },
+    {
+     name: "SS Starfleet",
+     id: 4,
+     speed: 400,
+     type: "Intergalactic Spacecraft"
+    }
+];
+
+// Scroll 
+const body = document.body
+
+function scrollUp() {
+	const btnScrollTop = document.querySelector('.scroll-top')
+
+	if (body.scrollTop > 500 || document.documentElement.scrollTop > 500 ) {
+		btnScrollTop.style.display = 'block'
+	} else {
+		btnScrollTop.style.display = 'none'
+	}
+}
+
+document.addEventListener('scroll', scrollUp)
+
+//end of my javascript for this page!
+</script>
+
+
+</html>
+

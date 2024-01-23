@@ -7,7 +7,7 @@ This project was completed as part of the course CS 160: User Interface Design a
 [<img src="https://github.com/khankamolk/cosmiq/blob/main/public/images/thumbnail.png?raw=true" height="400">](https://youtu.be/nrrAF0QS_vQ)
 \
 
-# Run Locally
+## Run Locally
 
 Here are some instructions for running this code locally. 
 We're going to be using a command-line interface.

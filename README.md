@@ -26,5 +26,5 @@ ex: ``$ node App.js``
 You should see the message ``Server is running on http://localhost:8000``
 
 If you instead see an error message like ``Error: Cannot find module 'express'`` -- see step 3. 
-### 5. View your website
+### 5. View the website
 Open a web browser (e.g. Google Chrome) to this URL: ``http://localhost:8000/``

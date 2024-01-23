@@ -5,13 +5,14 @@
 This project was completed as part of the course CS 160: User Interface Design and Development. Check out the demo linked down below.
 
 [<img src="https://github.com/khankamolk/cosmiq/blob/main/public/images/thumbnail.png?raw=true" height="400">](https://youtu.be/nrrAF0QS_vQ)
-\\
+\
+\
 
 Here are some instructions for running this code locally. 
 We're going to be using a command-line interface.
 (I'm writing this from the perspective of a Mac user using Terminal (zsh). If you're a Windows user, you might use Powershell. If you use Visual Studio Code, you might find [this page](https://docs.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-beginners-tutorial)
  helpful.)
-### 1. [Clone this repo](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) to your computer.
+### 1. [Clone or download this repo](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) to your computer.
 Once you've got it, [navigate to the directory](https://www.macworld.com/article/221277/command-line-navigating-files-folders-mac-terminal.html)
 (ex: ``$ cd starter-code``)
 ### 2. [Make sure you have Node and npm installed.](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) 

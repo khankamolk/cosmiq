@@ -7,9 +7,8 @@ This project was completed as part of the course CS 160: User Interface Design a
 [<img src="https://github.com/khankamolk/cosmiq/blob/main/public/images/thumbnail.png?raw=true" height="400">](https://youtu.be/nrrAF0QS_vQ)
 \
 
-## Run Locally
+## Running this code locally
 
-Here are some instructions for running this code locally. 
 We're going to be using a command-line interface.
 (I'm writing this from the perspective of a Mac user using Terminal (zsh). If you're a Windows user, you might use Powershell. If you use Visual Studio Code, you might find [this page](https://docs.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-beginners-tutorial)
  helpful.)
